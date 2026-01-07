@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SeatSphere — Checkout</title>
-
   <style>
     :root{
       --bg:#f6f7f9;
@@ -13,53 +12,52 @@
       --muted:#6b7280;
       --border:#e5e7eb;
       --shadow:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.1);
-
-      /* GREY + RED PALETTE ONLY */
-      --primary:#374151;
-      --primary-dark:#1f2937;
-      --danger:#b42318;
+      --purple:#6d28d9;
+      --purple-dark:#5b21b6;
       --danger-bg:#ffe8ea;
-      --link:#374151;
+      --danger:#b42318;
+      --link:#6d28d9;
+      --green:#027a48;
     }
 
-    *{ box-sizing:border-box; }
-
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       background:var(--bg);
       color:var(--text);
     }
 
-    /* HEADER */
+    /* Header */
     .topbar{
       height:56px;
       background:#fff;
       border-bottom:1px solid var(--border);
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
       padding:0 22px;
     }
     .brand{
       font-weight:800;
-      font-size:20px;
+      letter-spacing:.2px;
       color:#4b5563;
+      font-size:20px;
     }
     .topbar-right{
       display:flex;
       align-items:center;
       gap:16px;
-      font-size:13px;
       color:#4b5563;
+      font-size:13px;
     }
     .pill{
       display:flex;
       align-items:center;
-      gap:6px;
+      gap:8px;
+      cursor:pointer;
       padding:6px 8px;
       border-radius:8px;
-      cursor:pointer;
     }
     .pill:hover{ background:#f3f4f6; }
     .caret{
@@ -67,25 +65,31 @@
       border-left:4px solid transparent;
       border-right:4px solid transparent;
       border-top:5px solid #6b7280;
+      margin-left:2px;
+    }
+    .clock{
+      width:16px;height:16px; display:inline-block;
     }
 
-    /* LAYOUT */
+    /* Layout */
     .wrap{
       max-width:1120px;
       margin:18px auto 60px;
       padding:0 18px;
     }
     h1{
+      margin:18px 0 18px;
       font-size:34px;
-      margin:18px 0;
+      letter-spacing:-.02em;
     }
     .grid{
       display:grid;
-      grid-template-columns:1fr 360px;
+      grid-template-columns: 1fr 360px;
       gap:22px;
+      align-items:start;
     }
 
-    /* LEFT CARD */
+    /* Left Card */
     .card{
       background:var(--card);
       border:1px solid var(--border);
@@ -93,85 +97,100 @@
       box-shadow:var(--shadow);
       overflow:hidden;
     }
+
     .carousel{
       position:relative;
       height:280px;
       background:#ddd;
+      overflow:hidden;
     }
     .slide{
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:700;
-      color:white;
-      background:linear-gradient(135deg,#6b7280,#111827);
+      color:#fff;
+      background:linear-gradient(135deg, #4b5563, #111827);
       opacity:0;
-      transition:.3s;
+      transition:opacity .25s ease;
     }
     .slide.active{ opacity:1; }
 
-    .nav{
+    .nav-btn{
       position:absolute;
       top:50%;
       transform:translateY(-50%);
       width:34px;height:34px;
       border:none;
       border-radius:999px;
-      background:rgba(0,0,0,.4);
-      color:white;
+      background:rgba(17,24,39,.35);
+      color:#fff;
       cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:background .15s ease, transform .05s ease;
     }
-    .nav.left{ left:14px; }
-    .nav.right{ right:14px; }
+    .nav-btn:hover{ background:rgba(17,24,39,.55); }
+    .nav-btn:active{ transform:translateY(-50%) scale(.98); }
+    .nav-btn.left{ left:14px; }
+    .nav-btn.right{ right:14px; }
 
     .dots{
       position:absolute;
-      bottom:14px;
       left:50%;
+      bottom:14px;
       transform:translateX(-50%);
       display:flex;
       gap:8px;
     }
     .dot{
-      width:8px;height:8px;
-      border-radius:50%;
-      background:rgba(255,255,255,.5);
+      width:8px;height:8px;border-radius:999px;
+      background:rgba(255,255,255,.45);
       cursor:pointer;
+      border:0;
     }
-    .dot.active{ background:white; }
+    .dot.active{ background:#fff; }
 
-    .event-body{ padding:18px; }
+    .event-body{
+      padding:18px 18px 16px;
+    }
     .event-row{
       display:flex;
       justify-content:space-between;
       gap:12px;
+      align-items:flex-start;
     }
     .event-title{
       font-size:20px;
       font-weight:800;
+      margin:0 0 4px;
     }
     .meta{
-      font-size:13px;
       color:var(--muted);
+      font-size:13px;
       line-height:1.35;
     }
+
     .thumb{
       width:54px;height:54px;
       border-radius:10px;
-      background:#9ca3af;
+      border:1px solid var(--border);
+      overflow:hidden;
+      background:linear-gradient(135deg, #f59e0b, #7c3aed);
       display:flex;
       align-items:center;
       justify-content:center;
-      color:white;
+      color:#fff;
       font-weight:800;
+      flex:0 0 auto;
     }
 
     .badges{
       display:flex;
       gap:8px;
-      margin:14px 0;
+      margin:14px 0 14px;
       flex-wrap:wrap;
     }
     .badge{
@@ -179,122 +198,168 @@
       padding:4px 8px;
       border-radius:8px;
       border:1px solid var(--border);
-      white-space:nowrap;
+      background:#fff;
+      color:#111827;
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
     }
-    .badge.red{
-      background:#fff1f2;
-      color:#9f1239;
-      border-color:#fecdd3;
-    }
-    .badge.gold{
-      background:#fffbeb;
-      color:#92400e;
-      border-color:#fde68a;
-    }
+    .badge.red{ background:#fff1f2; border-color:#fecdd3; color:#9f1239; }
+    .badge.gold{ background:#fffbeb; border-color:#fde68a; color:#92400e; }
 
-    .divider{ border-top:1px solid var(--border); margin:14px 0; }
-
+    .divider{ border-top:1px solid var(--border); margin:12px 0 0; }
+    .seating{
+      padding-top:14px;
+      margin-top:14px;
+    }
     .seat-line{
       font-weight:700;
       margin-bottom:6px;
     }
     .clearview{
-      font-size:13px;
       color:var(--link);
+      font-size:13px;
       text-decoration:none;
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+      padding:2px 0;
     }
     .clearview:hover{ text-decoration:underline; }
 
     .popular{
       margin-top:10px;
-      font-size:13px;
       color:var(--muted);
+      font-size:13px;
       display:flex;
       gap:8px;
       align-items:center;
     }
+    .flame{
+      width:18px;height:18px;border-radius:6px;
+      background:#fff1f2;
+      border:1px solid #fecdd3;
+      display:flex;align-items:center;justify-content:center;
+      color:#be123c;
+      font-size:12px;
+      flex:0 0 auto;
+    }
 
-    /* RIGHT COLUMN */
+    /* Right column */
     .stack{ display:flex; flex-direction:column; gap:16px; }
 
     .summary{
-      background:#fff;
-      border:1px solid var(--border);
       border-radius:12px;
-      box-shadow:var(--shadow);
       overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      background:#fff;
     }
     .urgency{
       background:var(--danger-bg);
       color:var(--danger);
-      font-size:13px;
-      font-weight:600;
       padding:10px 12px;
+      font-size:12.5px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:600;
     }
-    .summary-body{ padding:14px; }
+    .tri{
+      width:0;height:0;
+      border-left:6px solid transparent;
+      border-right:6px solid transparent;
+      border-bottom:10px solid #f79009;
+      position:relative;
+      top:-1px;
+    }
+    .summary-body{
+      padding:14px 14px 16px;
+    }
     .summary-title{
       font-size:16px;
       font-weight:800;
-      margin-bottom:12px;
+      margin:6px 0 12px;
     }
     .row{
       display:flex;
       justify-content:space-between;
+      align-items:center;
       padding:10px 0;
       border-bottom:1px solid var(--border);
       font-size:13.5px;
     }
-    .row:last-child{ border-bottom:none; }
+    .row:last-of-type{ border-bottom:none; }
+    .row strong{ font-weight:800; }
 
     .price-link{
       display:inline-block;
-      margin:10px 0;
-      font-size:12.5px;
       color:var(--link);
+      font-size:12.5px;
       text-decoration:none;
+      margin:10px 0 10px;
+      cursor:pointer;
     }
     .price-link:hover{ text-decoration:underline; }
 
     label{
+      display:block;
       font-size:12px;
       color:var(--muted);
-      display:block;
-      margin-bottom:6px;
+      margin:8px 0 6px;
     }
     select{
       width:100%;
-      padding:10px;
+      padding:10px 12px;
+      border:1px solid #d1d5db;
       border-radius:8px;
-      border:1px solid var(--border);
-      cursor:pointer;
+      font-size:14px;
       background:#fff;
+      cursor:pointer;
     }
 
     .btn{
       width:100%;
       margin-top:14px;
-      padding:12px;
+      padding:12px 12px;
       border:none;
       border-radius:8px;
-      background:var(--primary);
-      color:white;
+      background:var(--purple);
+      color:#fff;
       font-weight:800;
       cursor:pointer;
+      transition:background .15s ease, transform .05s ease;
     }
-    .btn:hover{ background:var(--primary-dark); }
+    .btn:hover{ background:var(--purple-dark); }
+    .btn:active{ transform:translateY(1px); }
 
-    @media(max-width:980px){
+    /* Click feedback */
+    a, button, select, .pill { -webkit-tap-highlight-color: transparent; }
+    .clickflash{ animation: flash .12s ease; }
+    @keyframes flash { from{ filter:brightness(1);} to{ filter:brightness(.92);} }
+
+    /* Responsive */
+    @media (max-width: 980px){
       .grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
-
 <body>
   <div class="topbar">
     <div class="brand">SeatSphere</div>
     <div class="topbar-right">
-      <div class="pill">🕘 09:38</div>
-      <div class="pill">USD · EN <span class="caret"></span></div>
+      <div class="pill" id="timePill" role="button" aria-label="Time">
+        <svg class="clock" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="#6b7280" stroke-width="2"></circle>
+          <path d="M12 7v6l4 2" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span>09:38</span>
+      </div>
+      <div class="pill" id="langPill" role="button" aria-label="Currency and language">
+        <span>USD</span>
+        <span>EN</span>
+        <span class="caret" aria-hidden="true"></span>
+      </div>
     </div>
   </div>
 
@@ -302,97 +367,143 @@
     <h1>Checkout</h1>
 
     <div class="grid">
-      <!-- LEFT -->
       <div class="card">
-        <div class="carousel">
-          <div class="slide active">Columbus Arena View 1</div>
-          <div class="slide">Columbus Arena View 2</div>
-          <div class="slide">Columbus Arena View 3</div>
+        <div class="carousel" aria-label="Event image carousel">
+          <div class="slide active" data-i="0">Columbus Arena View 1</div>
+          <div class="slide" data-i="1" style="background:linear-gradient(135deg,#10b981,#064e3b)">Columbus Arena View 2</div>
+          <div class="slide" data-i="2" style="background:linear-gradient(135deg,#f59e0b,#7c2d12)">Columbus Arena View 3</div>
 
-          <button class="nav left" onclick="show(-1)">‹</button>
-          <button class="nav right" onclick="show(1)">›</button>
+          <button class="nav-btn left" id="prevBtn" aria-label="Previous image">‹</button>
+          <button class="nav-btn right" id="nextBtn" aria-label="Next image">›</button>
 
-          <div class="dots">
-            <div class="dot active" onclick="setSlide(0)"></div>
-            <div class="dot" onclick="setSlide(1)"></div>
-            <div class="dot" onclick="setSlide(2)"></div>
+          <div class="dots" aria-label="Carousel dots">
+            <button class="dot active" data-dot="0" aria-label="Image 1"></button>
+            <button class="dot" data-dot="1" aria-label="Image 2"></button>
+            <button class="dot" data-dot="2" aria-label="Image 3"></button>
           </div>
         </div>
 
         <div class="event-body">
           <div class="event-row">
             <div>
-              <div class="event-title">John Doe Live</div>
+              <p class="event-title">John Doe Live</p>
               <div class="meta">
-                Sat Aug 09 • 7:30 PM<br>
-                Columbus Arena<br>
+                Sat Aug 09 • 7:30 PM<br/>
+                Columbus Arena<br/>
                 Columbus, Ohio, USA
               </div>
             </div>
-            <div class="thumb">JD</div>
+            <div class="thumb" title="Artist thumbnail">JD</div>
           </div>
 
           <div class="badges">
-            <span class="badge red">🔥 High demand</span>
-            <span class="badge gold">🏆 Award winning artist</span>
+            <span class="badge red">🔥 <span>High demand</span></span>
+            <span class="badge gold">🏆 <span>Award winning artist</span></span>
           </div>
 
           <div class="divider"></div>
 
-          <div class="seat-line">Section 125 • Row 13 • 1 ticket</div>
-          <a class="clearview" href="#" onclick="return false;">👁️ Clear view</a>
-
-          <div class="popular">🔥 <strong>Popular pick</strong> • 9 people viewed this event</div>
+          <div class="seating">
+            <div class="seat-line">Section 125 • Row 13 • 1 ticket</div>
+            <a class="clearview" href="#" id="clearViewLink" aria-label="Clear view (no navigation)">👁️ <span>Clear view</span></a>
+            <div class="popular">
+              <div class="flame">🔥</div>
+              <div><strong>Popular pick</strong> • 9 people viewed this event</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- RIGHT -->
       <div class="stack">
         <div class="summary">
-          <div class="urgency">⚠️ Last tickets remaining in Row 13 in Section 125</div>
+          <div class="urgency">
+            <span class="tri" aria-hidden="true"></span>
+            <span>Last tickets remaining in Row 13 in Section 125</span>
+          </div>
+
           <div class="summary-body">
             <div class="summary-title">Order summary</div>
 
             <div class="row">
-              <span>Ticket × 1</span><span>$150</span>
+              <span>Ticket × 1</span>
+              <span>$150</span>
             </div>
 
-            <div class="row">
-              <strong>Total price</strong><strong>$150</strong>
+            <div class="row" style="border-bottom:none; padding-bottom:2px;">
+              <strong>Total price</strong>
+              <strong>$150</strong>
             </div>
 
-            <a class="price-link" href="#" onclick="return false;">Price breakdown</a>
+            <a href="#" class="price-link" id="priceBreakdown">Price breakdown</a>
 
-            <label>Quantity</label>
-            <select>
-              <option>1</option><option>2</option><option>3</option><option>4</option>
+            <label for="qty">Quantity</label>
+            <select id="qty">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
             </select>
 
-            <button class="btn" onclick="void 0;">Confirm Order</button>
+            <button class="btn" id="confirmBtn">Confirm Order</button>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
   <script>
-    let i = 0;
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
+    function noNav(e){
+      e.preventDefault();
+      const el = e.currentTarget;
+      el.classList.remove('clickflash');
+      void el.offsetWidth; 
+      el.classList.add('clickflash');
+    }
 
-    function setSlide(n){
-      slides[i].classList.remove('active');
-      dots[i].classList.remove('active');
-      i = n;
-      slides[i].classList.add('active');
-      dots[i].classList.add('active');
+    const slides = [...document.querySelectorAll('.slide')];
+    const dots = [...document.querySelectorAll('.dot')];
+    let idx = 0;
+
+    function setSlide(i){
+      idx = (i + slides.length) % slides.length;
+      slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+      dots.forEach((d, j) => d.classList.toggle('active', j === idx));
     }
-    function show(dir){
-      let n = i + dir;
-      if(n < 0) n = slides.length - 1;
-      if(n >= slides.length) n = 0;
-      setSlide(n);
-    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => setSlide(idx - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => setSlide(idx + 1));
+    dots.forEach(d => d.addEventListener('click', () => setSlide(parseInt(d.dataset.dot, 10))));
+
+    ['clearViewLink','priceBreakdown','timePill','langPill'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('click', noNav);
+    });
+
+    const confirmBtn = document.getElementById('confirmBtn');
+    confirmBtn.addEventListener('click', () => {
+      confirmBtn.classList.remove('clickflash');
+      void confirmBtn.offsetWidth;
+      confirmBtn.classList.add('clickflash');
+      confirmBtn.textContent = 'Confirmed';
+      confirmBtn.disabled = true;
+      confirmBtn.style.background = '#16a34a';
+      confirmBtn.style.cursor = 'default';
+      confirmBtn.style.transform = 'none';
+      setTimeout(() => {
+        confirmBtn.textContent = 'Confirm Order';
+        confirmBtn.disabled = false;
+        confirmBtn.style.background = '';
+        confirmBtn.style.cursor = '';
+      }, 1400);
+    });
+
+    document.getElementById('qty').addEventListener('change', (e) => {
+      e.target.classList.remove('clickflash');
+      void e.target.offsetWidth;
+      e.target.classList.add('clickflash');
+    });
   </script>
 </body>
 </html>
