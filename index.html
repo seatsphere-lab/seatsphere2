@@ -76,3 +76,323 @@
       padding:0 18px;
     }
     h1{
+      font-size:34px;
+      margin:18px 0;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:22px;
+    }
+
+    /* LEFT CARD */
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .carousel{
+      position:relative;
+      height:280px;
+      background:#ddd;
+    }
+    .slide{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:white;
+      background:linear-gradient(135deg,#6b7280,#111827);
+      opacity:0;
+      transition:.3s;
+    }
+    .slide.active{ opacity:1; }
+
+    .nav{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:34px;height:34px;
+      border:none;
+      border-radius:999px;
+      background:rgba(0,0,0,.4);
+      color:white;
+      cursor:pointer;
+    }
+    .nav.left{ left:14px; }
+    .nav.right{ right:14px; }
+
+    .dots{
+      position:absolute;
+      bottom:14px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:8px;
+    }
+    .dot{
+      width:8px;height:8px;
+      border-radius:50%;
+      background:rgba(255,255,255,.5);
+      cursor:pointer;
+    }
+    .dot.active{ background:white; }
+
+    .event-body{ padding:18px; }
+    .event-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .event-title{
+      font-size:20px;
+      font-weight:800;
+    }
+    .meta{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.35;
+    }
+    .thumb{
+      width:54px;height:54px;
+      border-radius:10px;
+      background:#9ca3af;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:800;
+    }
+
+    .badges{
+      display:flex;
+      gap:8px;
+      margin:14px 0;
+      flex-wrap:wrap;
+    }
+    .badge{
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      white-space:nowrap;
+    }
+    .badge.red{
+      background:#fff1f2;
+      color:#9f1239;
+      border-color:#fecdd3;
+    }
+    .badge.gold{
+      background:#fffbeb;
+      color:#92400e;
+      border-color:#fde68a;
+    }
+
+    .divider{ border-top:1px solid var(--border); margin:14px 0; }
+
+    .seat-line{
+      font-weight:700;
+      margin-bottom:6px;
+    }
+    .clearview{
+      font-size:13px;
+      color:var(--link);
+      text-decoration:none;
+    }
+    .clearview:hover{ text-decoration:underline; }
+
+    .popular{
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    /* RIGHT COLUMN */
+    .stack{ display:flex; flex-direction:column; gap:16px; }
+
+    .summary{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .urgency{
+      background:var(--danger-bg);
+      color:var(--danger);
+      font-size:13px;
+      font-weight:600;
+      padding:10px 12px;
+    }
+    .summary-body{ padding:14px; }
+    .summary-title{
+      font-size:16px;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+    .row{
+      display:flex;
+      justify-content:space-between;
+      padding:10px 0;
+      border-bottom:1px solid var(--border);
+      font-size:13.5px;
+    }
+    .row:last-child{ border-bottom:none; }
+
+    .price-link{
+      display:inline-block;
+      margin:10px 0;
+      font-size:12.5px;
+      color:var(--link);
+      text-decoration:none;
+    }
+    .price-link:hover{ text-decoration:underline; }
+
+    label{
+      font-size:12px;
+      color:var(--muted);
+      display:block;
+      margin-bottom:6px;
+    }
+    select{
+      width:100%;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      cursor:pointer;
+      background:#fff;
+    }
+
+    .btn{
+      width:100%;
+      margin-top:14px;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background:var(--primary);
+      color:white;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .btn:hover{ background:var(--primary-dark); }
+
+    @media(max-width:980px){
+      .grid{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="brand">SeatSphere</div>
+    <div class="topbar-right">
+      <div class="pill">🕘 09:38</div>
+      <div class="pill">USD · EN <span class="caret"></span></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h1>Checkout</h1>
+
+    <div class="grid">
+      <!-- LEFT -->
+      <div class="card">
+        <div class="carousel">
+          <div class="slide active">Columbus Arena View 1</div>
+          <div class="slide">Columbus Arena View 2</div>
+          <div class="slide">Columbus Arena View 3</div>
+
+          <button class="nav left" onclick="show(-1)">‹</button>
+          <button class="nav right" onclick="show(1)">›</button>
+
+          <div class="dots">
+            <div class="dot active" onclick="setSlide(0)"></div>
+            <div class="dot" onclick="setSlide(1)"></div>
+            <div class="dot" onclick="setSlide(2)"></div>
+          </div>
+        </div>
+
+        <div class="event-body">
+          <div class="event-row">
+            <div>
+              <div class="event-title">John Doe Live</div>
+              <div class="meta">
+                Sat Aug 09 • 7:30 PM<br>
+                Columbus Arena<br>
+                Columbus, Ohio, USA
+              </div>
+            </div>
+            <div class="thumb">JD</div>
+          </div>
+
+          <div class="badges">
+            <span class="badge red">🔥 High demand</span>
+            <span class="badge gold">🏆 Award winning artist</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="seat-line">Section 125 • Row 13 • 1 ticket</div>
+          <a class="clearview" href="#" onclick="return false;">👁️ Clear view</a>
+
+          <div class="popular">🔥 <strong>Popular pick</strong> • 9 people viewed this event</div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="stack">
+        <div class="summary">
+          <div class="urgency">⚠️ Last tickets remaining in Row 13 in Section 125</div>
+          <div class="summary-body">
+            <div class="summary-title">Order summary</div>
+
+            <div class="row">
+              <span>Ticket × 1</span><span>$150</span>
+            </div>
+
+            <div class="row">
+              <strong>Total price</strong><strong>$150</strong>
+            </div>
+
+            <a class="price-link" href="#" onclick="return false;">Price breakdown</a>
+
+            <label>Quantity</label>
+            <select>
+              <option>1</option><option>2</option><option>3</option><option>4</option>
+            </select>
+
+            <button class="btn" onclick="void 0;">Confirm Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let i = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function setSlide(n){
+      slides[i].classList.remove('active');
+      dots[i].classList.remove('active');
+      i = n;
+      slides[i].classList.add('active');
+      dots[i].classList.add('active');
+    }
+    function show(dir){
+      let n = i + dir;
+      if(n < 0) n = slides.length - 1;
+      if(n >= slides.length) n = 0;
+      setSlide(n);
+    }
+  </script>
+</body>
+</html>
