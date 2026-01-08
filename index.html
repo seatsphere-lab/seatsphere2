@@ -41,7 +41,7 @@
     .brand{
       font-weight:800;
       letter-spacing:.2px;
-      color:#4b5563;
+      color:#4b5563; /* dark grey logo text */
       font-size:20px;
     }
     .topbar-right{
@@ -333,7 +333,57 @@
     .btn:hover{ background:var(--purple-dark); }
     .btn:active{ transform:translateY(1px); }
 
-    /* Click feedback */
+    /* Safety module */
+    .safety{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 4px 1fr;
+    }
+    .safety-accent{
+      background:#12b76a; /* green left bar */
+    }
+    .safety-body{
+      padding:14px 14px 16px;
+    }
+    .safety-title{
+      font-weight:900;
+      margin:4px 0 8px;
+      color:#065f46;
+    }
+    .safety-head{
+      font-weight:700;
+      color:#111827;
+      margin:0 0 10px;
+      font-size:13.5px;
+    }
+    .bullets{
+      margin:0 0 10px 0;
+      padding-left:18px;
+      color:#374151;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .bullets li{ margin:8px 0; }
+    .s-links{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .s-links a{
+      color:var(--link);
+      text-decoration:none;
+      font-size:13px;
+      cursor:pointer;
+      width:max-content;
+    }
+    .s-links a:hover{ text-decoration:underline; }
+
+    /* “Clickable but no navigation” feedback */
     a, button, select, .pill { -webkit-tap-highlight-color: transparent; }
     .clickflash{ animation: flash .12s ease; }
     @keyframes flash { from{ filter:brightness(1);} to{ filter:brightness(.92);} }
@@ -367,6 +417,7 @@
     <h1>Checkout</h1>
 
     <div class="grid">
+      <!-- LEFT -->
       <div class="card">
         <div class="carousel" aria-label="Event image carousel">
           <div class="slide active" data-i="0">Columbus Arena View 1</div>
@@ -414,6 +465,7 @@
         </div>
       </div>
 
+      <!-- RIGHT -->
       <div class="stack">
         <div class="summary">
           <div class="urgency">
@@ -447,32 +499,41 @@
             <button class="btn" id="confirmBtn">Confirm Order</button>
           </div>
         </div>
- <div class="safety" aria-label="SeatSphere Safety Notice">
-          <div class="safety-accent" aria-hidden="true"></div>
-          <div class="safety-body">
-            <div class="safety-title">SeatSphere Safety Notice</div>
-            <p class="safety-head">You chose a trusted marketplace - and that matters.</p>
-            <ul class="bullets">
-              <li>SeatSphere brings together tickets from sellers across a wide range of live events.</li>
-              <li>Listings include details to help you compare seating, pricing, and availability.</li>
-              <li>Your order information is displayed clearly before you complete your purchase.</li>
-              <li>Customer support is available to help with general questions about tickets and orders.</li>
-         </ul>
-        
+
+<div class="safety" aria-label="SeatSphere Notice">
+  <div class="safety-accent" aria-hidden="true"></div>
+  <div class="safety-body">
+    <div class="safety-title">SeatSphere Notice</div>
+    <p class="safety-head">What to expect when browsing listings and checking out.</p>
+    <ul class="bullets">
+      <li>SeatSphere brings together tickets from sellers across a wide range of live events.</li>
+      <li>Listings include details to help you compare seating, pricing, and availability.</li>
+      <li>Your order information is displayed clearly before you complete your purchase.</li>
+      <li>Customer support is available to help with general questions about tickets and orders.</li>
+    </ul>
+    <div class="s-links">
+      <a href="#" id="learnLink">Learn more about SeatSphere</a>
+      <a href="#" id="reportLink">Resell anytime</a>
+    </div>
+  </div>
+</div>
+
       </div>
 
     </div>
   </div>
 
   <script>
+    // Prevent navigation; provide subtle click feedback
     function noNav(e){
       e.preventDefault();
       const el = e.currentTarget;
       el.classList.remove('clickflash');
-      void el.offsetWidth; 
+      void el.offsetWidth; // restart animation
       el.classList.add('clickflash');
     }
 
+    // Carousel
     const slides = [...document.querySelectorAll('.slide')];
     const dots = [...document.querySelectorAll('.dot')];
     let idx = 0;
@@ -487,12 +548,14 @@
     document.getElementById('nextBtn').addEventListener('click', () => setSlide(idx + 1));
     dots.forEach(d => d.addEventListener('click', () => setSlide(parseInt(d.dataset.dot, 10))));
 
-    ['clearViewLink','priceBreakdown','timePill','langPill'].forEach(id=>{
+    // Make “links” and pills inert
+    ['clearViewLink','priceBreakdown','learnLink','reportLink','timePill','langPill'].forEach(id=>{
       const el = document.getElementById(id);
       if(!el) return;
       el.addEventListener('click', noNav);
     });
 
+    // Confirm button: no redirect; just show inline feedback
     const confirmBtn = document.getElementById('confirmBtn');
     confirmBtn.addEventListener('click', () => {
       confirmBtn.classList.remove('clickflash');
@@ -511,11 +574,15 @@
       }, 1400);
     });
 
+    // Quantity visual feedback only (no price changes)
     document.getElementById('qty').addEventListener('change', (e) => {
       e.target.classList.remove('clickflash');
       void e.target.offsetWidth;
       e.target.classList.add('clickflash');
     });
+
+    // Optional auto-advance like real sites (comment out if you want static)
+    // setInterval(()=>setSlide(idx+1), 6000);
   </script>
 </body>
 </html>
